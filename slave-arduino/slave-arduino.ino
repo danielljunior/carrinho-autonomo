@@ -51,22 +51,22 @@ void loop(){
 }
 
 void serialEvent(){
-    lastCommunication = millis();
-    /*
-     * Parse Command
-     */
-    String command = Serial.readString();
-
-    if(command.startsWith("Turn")){
-      command.remove(0, 5); // "Turn "
-      carRun( command.toInt() );
-    
-    } else if(command.startsWith("Run")){
-      carRun(0);
-
-    } else {
-      carStop();
-    }
+  /*
+  * Parse Command
+  */
+  String command = Serial.readStringUntil('\n');
+  lastCommunication = millis();
+  
+  if(command.startsWith("Turn")){
+    command.remove(0, 5); // "Turn "
+    carRun( command.toInt() );
+  
+  } else if(command.startsWith("Run")){
+    carRun(0);
+  } else {
+    carStop();
+  }
+  
 }
 
 void carStop(){
@@ -81,7 +81,7 @@ void carStop(){
  *              > 0 - turn right
  */
 void carRun(int factor){
-
+  
   //run
   if(factor == 0){
     analogWrite(ENA, 255);
